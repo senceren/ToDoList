@@ -48,7 +48,7 @@ namespace ToDoList
 
         private void clbTodo_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            TodoItem secili = (TodoItem)clbTodo.CheckedItems;
+            
         }
     }
 }
