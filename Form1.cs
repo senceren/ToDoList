@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using System.Windows.Forms;
 using ToDoList.Data;
 
@@ -20,6 +21,7 @@ namespace ToDoList
 
         }
 
+
         private void TodolariListele()
         {
             clbTodo.Items.Clear();
@@ -27,7 +29,6 @@ namespace ToDoList
             {
                 clbTodo.Items.Add(item, item.Done);
             }
-
 
         }
 
@@ -46,9 +47,62 @@ namespace ToDoList
 
         }
 
-        private void clbTodo_ItemCheck(object sender, ItemCheckEventArgs e)
+
+        private void clbTodo_ItemCheck_1(object sender, ItemCheckEventArgs e)
         {
-            
+            TodoItem secili = (TodoItem)clbTodo.SelectedItem;
+
+            if (secili == null)
+                return;
+            else
+            {
+
+                if (secili.Done == false)
+                    secili.Done = true;
+                else
+                    secili.Done = false;
+
+                db.SaveChanges();
+                TodolariListele();
+            }
+        }
+
+        private void btnSil_Click(object sender, EventArgs e)
+        {
+            if (clbTodo.SelectedItems.Count < 0)
+                return;
+
+            TodoItem silinecek = (TodoItem)clbTodo.SelectedItem;
+            db.TodoItems.Remove(silinecek);
+            //db.SaveChanges();
+            //TodolariListele();
+
+            // CHANGE TRACKER YÖNTEMÝ
+
+            foreach (var item in db.ChangeTracker.Entries())
+            {
+                TodoItem silinecekCT = (TodoItem)item.Entity;
+
+                if (item.State == EntityState.Deleted)
+                {
+                    silinecekCT.Deleted = true;
+                    silinecekCT.Done = false;
+                    
+                    Listele();
+                    
+                }
+
+            }
+
+        }
+
+        private void Listele()
+        {
+            foreach (var item in db.TodoItems)
+            {
+                if (item.Deleted == true)
+                    lstDeleted.Items.Add(item.Title);
+            }
         }
     }
 }
