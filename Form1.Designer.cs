@@ -38,9 +38,9 @@
             // 
             // txtTitle
             // 
-            txtTitle.Location = new Point(96, 41);
+            txtTitle.Location = new Point(84, 41);
             txtTitle.Name = "txtTitle";
-            txtTitle.Size = new Size(125, 27);
+            txtTitle.Size = new Size(149, 27);
             txtTitle.TabIndex = 1;
             // 
             // btnEkle
@@ -95,7 +95,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(711, 475);
+            ClientSize = new Size(400, 475);
             Controls.Add(btnSil);
             Controls.Add(clbTodo);
             Controls.Add(label2);
