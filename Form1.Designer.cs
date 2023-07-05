@@ -34,8 +34,6 @@
             label2 = new Label();
             clbTodo = new CheckedListBox();
             btnSil = new Button();
-            lstDeleted = new ListBox();
-            label3 = new Label();
             SuspendLayout();
             // 
             // txtTitle
@@ -93,31 +91,11 @@
             btnSil.UseVisualStyleBackColor = true;
             btnSil.Click += btnSil_Click;
             // 
-            // lstDeleted
-            // 
-            lstDeleted.FormattingEnabled = true;
-            lstDeleted.ItemHeight = 20;
-            lstDeleted.Location = new Point(382, 121);
-            lstDeleted.Name = "lstDeleted";
-            lstDeleted.Size = new Size(267, 284);
-            lstDeleted.TabIndex = 7;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(383, 93);
-            label3.Name = "label3";
-            label3.Size = new Size(62, 20);
-            label3.TabIndex = 8;
-            label3.Text = "Deleted";
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(711, 475);
-            Controls.Add(label3);
-            Controls.Add(lstDeleted);
             Controls.Add(btnSil);
             Controls.Add(clbTodo);
             Controls.Add(label2);
@@ -138,7 +116,5 @@
         private Label label2;
         private CheckedListBox clbTodo;
         private Button btnSil;
-        private ListBox lstDeleted;
-        private Label label3;
     }
 }

@@ -24,12 +24,15 @@ namespace ToDoList
 
         private void TodolariListele()
         {
+            clbTodo.ItemCheck -= clbTodo_ItemCheck_1;
             clbTodo.Items.Clear();
-            foreach (var item in db.TodoItems.OrderBy(x => x.Done))
+            foreach (var item in db.TodoItems.Where(x => !x.Deleted).OrderBy(x => x.Done))
             {
                 clbTodo.Items.Add(item, item.Done);
+
             }
 
+            clbTodo.ItemCheck += clbTodo_ItemCheck_1;
         }
 
         private void btnEkle_Click(object sender, EventArgs e)
@@ -63,10 +66,10 @@ namespace ToDoList
                     secili.Done = false;
 
                 db.SaveChanges();
-                TodolariListele();
+                BeginInvoke(TodolariListele); // checklendikten sonra çalýþtýrýyor. checklist box iþini bitirdikten sonra çalýþýyor. 
+
             }
         }
-
         private void btnSil_Click(object sender, EventArgs e)
         {
             if (clbTodo.SelectedItems.Count < 0)
@@ -74,35 +77,15 @@ namespace ToDoList
 
             TodoItem silinecek = (TodoItem)clbTodo.SelectedItem;
             db.TodoItems.Remove(silinecek);
-            //db.SaveChanges();
-            //TodolariListele();
+            db.SaveChanges();
+            TodolariListele();
 
-            // CHANGE TRACKER YÖNTEMÝ
+            // CHANGE TRACKER YÖNTEMÝ ÝLE CONTEXT ÝÇÝNDE SAVE CHANGES METODUNU EZDÝK VE SÝLÝNENLERÝ UNCAHNGED ÞEKLÝNDE GÜNCELLEDÝK.
+            // LÝSTELE METODUNDA DELETED ALANLARI FALSE OLANLARI GETÝRDÝK.
 
-            foreach (var item in db.ChangeTracker.Entries())
-            {
-                TodoItem silinecekCT = (TodoItem)item.Entity;
-
-                if (item.State == EntityState.Deleted)
-                {
-                    silinecekCT.Deleted = true;
-                    silinecekCT.Done = false;
-                    
-                    Listele();
-                    
-                }
-
-            }
 
         }
 
-        private void Listele()
-        {
-            foreach (var item in db.TodoItems)
-            {
-                if (item.Deleted == true)
-                    lstDeleted.Items.Add(item.Title);
-            }
-        }
+
     }
 }
