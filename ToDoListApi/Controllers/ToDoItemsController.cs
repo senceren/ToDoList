@@ -22,7 +22,7 @@ namespace ToDoListApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<ToDoItem> GetToDoItem(int id)  // hem action result döndğrmek hem de todoıtem göndermek için
+        public ActionResult<ToDoItem> GetToDoItem(int id)  // hem action result döndürmek hem de todoıtem göndermek için
         {
             var item = _db.ToDoItems.Find(id);
 
